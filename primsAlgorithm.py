@@ -61,16 +61,13 @@ class Cell:
         if self.highlited:
             pygame.draw.rect(SCREEN, WHITE, pygame.Rect(self.row*W, self.col*W, W, W))
         if self.lines[0]:
-            pygame.draw.line(SCREEN, GREEN, (self.row*W, self.col*W), (self.row*W+W+T, self.col*W), outlineThickness)
-
+            pygame.draw.line(SCREEN, GREEN, (self.col * W, self.row * W), (self.col * W, self.row * W + W + T), outlineThickness)
         if self.lines[1]:
-            pygame.draw.line(SCREEN, GREEN, (self.row*W+W, self.col*W), (self.row*W+W, self.col*W+W+T), outlineThickness)
-
+            pygame.draw.line(SCREEN, GREEN, (self.col * W, self.row * W + W), (self.col * W + W + T, self.row * W + W), outlineThickness)
         if self.lines[2]:
-            pygame.draw.line(SCREEN, GREEN, (self.row*W, self.col*W+W), (self.row*W+W+T, self.col*W+W), outlineThickness)
-
+            pygame.draw.line(SCREEN, GREEN, (self.col * W + W, self.row * W), (self.col * W + W, self.row * W + W + T), outlineThickness)
         if self.lines[3]:
-            pygame.draw.line(SCREEN, GREEN, (self.row*W, self.col*W), (self.row*W, self.col*W+W+T), outlineThickness)
+            pygame.draw.line(SCREEN, GREEN, (self.col * W, self.row * W), (self.col * W + W + T, self.row * W), outlineThickness)
 def updateCanvas():
     SCREEN.fill(BLACK)
     for i in range(ROWS):
@@ -79,7 +76,7 @@ def updateCanvas():
     pygame.display.update()
     pygame.time.delay(50)  # Adjust delay for animation speed    
 def removeWalls(currentCell, nextCell):
-    dx = currentCell.row - nextCell.row
+    dx = currentCell.col - nextCell.col
 
     if dx == 1:
         currentCell.lines[3] = False
@@ -88,7 +85,7 @@ def removeWalls(currentCell, nextCell):
         currentCell.lines[1] = False
         nextCell.lines[3] = False
 
-    dy = currentCell.col - nextCell.col
+    dy = currentCell.row - nextCell.row
     
     if dy == 1:
         currentCell.lines[0] = False
