@@ -143,9 +143,6 @@ def eraseWrongPath(path, collision_point):
     for cell in path[collision_index + 1:]:
         cell.inPath = False
         cell.highlited = False
-
-    # 更新迷宫显示，显示擦除的过程
-    updateCanvas()
     
     return path_to_keep  # 返回更新后的路径
 
