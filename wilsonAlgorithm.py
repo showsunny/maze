@@ -73,22 +73,20 @@ class Cell:
 
     def draw(self):
         if self.visited:
-            pygame.draw.rect(SCREEN, DARK_GREEN, pygame.Rect(self.row * W, self.col * W, W, W))
+            pygame.draw.rect(SCREEN, DARK_GREEN, pygame.Rect(self.col*W, self.row*W, W, W))
         if self.highlited:
-            pygame.draw.rect(SCREEN, WHITE, pygame.Rect(self.row * W, self.col * W, W, W))
+            pygame.draw.rect(SCREEN, WHITE, pygame.Rect(self.col*W, self.row*W, W, W))
         if self.inPath:
-            pygame.draw.rect(SCREEN, GREEN, pygame.Rect(self.row * W, self.col * W, W, W))
+            pygame.draw.rect(SCREEN, GREEN, pygame.Rect(self.col*W, self.row*W, W, W))
         if self.lines[0]:
-            pygame.draw.line(SCREEN, GREEN, (self.row * W, self.col * W), (self.row * W + W + T, self.col * W), outlineThickness)
-
+            pygame.draw.line(SCREEN, GREEN, (self.col * W, self.row * W), (self.col * W, self.row * W + W + T), outlineThickness)
         if self.lines[1]:
-            pygame.draw.line(SCREEN, GREEN, (self.row * W + W, self.col * W), (self.row * W + W, self.col * W + W + T), outlineThickness)
-
+            pygame.draw.line(SCREEN, GREEN, (self.col * W, self.row * W + W), (self.col * W + W + T, self.row * W + W), outlineThickness)
         if self.lines[2]:
-            pygame.draw.line(SCREEN, GREEN, (self.row * W, self.col * W + W), (self.row * W + W + T, self.col * W + W), outlineThickness)
-
+            pygame.draw.line(SCREEN, GREEN, (self.col * W + W, self.row * W), (self.col * W + W, self.row * W + W + T), outlineThickness)
         if self.lines[3]:
-            pygame.draw.line(SCREEN, GREEN, (self.row * W, self.col * W), (self.row * W, self.col * W + W + T), outlineThickness)
+            pygame.draw.line(SCREEN, GREEN, (self.col * W, self.row * W), (self.col * W + W + T, self.row * W), outlineThickness)
+        
     def checkNearCells(self, lastPosition):
         nearCells = []
 
