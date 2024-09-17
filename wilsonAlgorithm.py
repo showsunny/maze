@@ -79,13 +79,13 @@ class Cell:
         if self.inPath:
             pygame.draw.rect(SCREEN, GREEN, pygame.Rect(self.col*W, self.row*W, W, W))
         if self.lines[0]:
-            pygame.draw.line(SCREEN, GREEN, (self.col * W, self.row * W), (self.col * W, self.row * W + W + T), outlineThickness)
+            pygame.draw.line(SCREEN, GREEN, (self.col*W, self.row*W), (self.col*W+W+T, self.row*W), outlineThickness)
         if self.lines[1]:
-            pygame.draw.line(SCREEN, GREEN, (self.col * W, self.row * W + W), (self.col * W + W + T, self.row * W + W), outlineThickness)
+            pygame.draw.line(SCREEN, GREEN, (self.col*W+W, self.row*W), (self.col*W+W, self.row*W+W+T), outlineThickness)
         if self.lines[2]:
-            pygame.draw.line(SCREEN, GREEN, (self.col * W + W, self.row * W), (self.col * W + W, self.row * W + W + T), outlineThickness)
+            pygame.draw.line(SCREEN, GREEN, (self.col*W, self.row*W+W), (self.col*W+W+T, self.row*W+W), outlineThickness)
         if self.lines[3]:
-            pygame.draw.line(SCREEN, GREEN, (self.col * W, self.row * W), (self.col * W + W + T, self.row * W), outlineThickness)
+            pygame.draw.line(SCREEN, GREEN, (self.col*W, self.row*W), (self.col*W, self.row*W+W+T), outlineThickness)
         
     def checkNearCells(self, lastPosition):
         nearCells = []
