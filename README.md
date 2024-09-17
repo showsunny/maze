@@ -1,7 +1,7 @@
 # maze
 python implementation of maze generation and solving algorithms
 
-python代码实现迷宫生成与寻路算法
+python代码实现迷宫生成与寻路算法(本项目的代码只能生成Perfect Maze：任意两点之间有且只有一条通路即不存在环路和隔离限制)
 
 ### 推荐环境：
 
