@@ -118,8 +118,8 @@ def updateCanvas():
     pygame.display.update()
     pygame.time.delay(50)  # Adjust delay for animation speed
 def removeWalls(currentCell, nextCell):
-    dx = currentCell.row - nextCell.row
-    dy = currentCell.col - nextCell.col
+    dy = currentCell.row - nextCell.row
+    dx = currentCell.col - nextCell.col
     if dx == 1:
         currentCell.lines[3] = False
         nextCell.lines[1] = False
