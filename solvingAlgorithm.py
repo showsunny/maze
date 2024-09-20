@@ -201,9 +201,124 @@ def addZeros(number, desired_length):
         return  '0' * zeros_to_add + number_str
 
 
+def checkWalls(direction, current):
+    """
+    检查当前方向的墙壁情况。
+    返回一个元组 (forward, right)：
+    - forward: 当前方向前方是否有墙壁。
+    - right: 右转方向是否有墙壁。
+    """
+    # direction的顺序是[上, 右, 下, 左]
+    forward = current.lines[direction.index(1)]  # 当前方向的前方
+    right = current.lines[(direction.index(1) + 1) % 4]  # 当前方向的右转
+
+    return forward, right
+
+def moveForward(current, direction, cells):
+    """
+    根据当前的方向移动到下一个单元格。
+    """
+    row, col = current.row, current.col
+
+    # 根据方向向上、右、下、左移动
+    if direction[0] == 1:  # 向上
+        next_cell = returnCellIndex(row - 1, col, cells)
+    elif direction[1] == 1:  # 向右
+        next_cell = returnCellIndex(row, col + 1, cells)
+    elif direction[2] == 1:  # 向下
+        next_cell = returnCellIndex(row + 1, col, cells)
+    elif direction[3] == 1:  # 向左
+        next_cell = returnCellIndex(row, col - 1, cells)
+
+    return next_cell
+
+def wallFollower(startCell, endCell, cells, show=True, saveVideo=False, saveData=False):
+    """
+        right hand side wall follower
+    """
+    done = False
+    path = []
+    visited = set()  # 使用集合记录访问过的单元格
+    direction = [0, 0, 0, 1]  # 初始方向向左
+    current = startCell
+    current.highlited = True
+    
+    lastPosition = [current.row, current.col]
+
+    current.inMaze = True  # 初始位置在迷宫中
+
+    current_date_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    k = 0
+
+    while not done:
+        # 更新迷宫显示
+        if show:
+            updateCanvas(cells)
+
+        # 检查当前方向是否能移动
+        nextWalls = checkWalls(direction, current)
+
+        if not nextWalls[1]:  # 右边无墙
+            # 右转
+            direction = direction[-1:] + direction[:-1]  # 右转
+            next = moveForward(current, direction, cells)
+            current.highlited = False
+            current.inMaze = True  # 标记为已探索
+            next.highlited = True
+            current = next
+
+            path.append(current)
+        elif not nextWalls[0]:  # 前方无墙
+            # 继续前进
+            next = moveForward(current, direction, cells)
+            current.highlited = False
+            current.inMaze = True  # 标记为已探索
+            next.highlited = True
+            current = next
+            path.append(current)
+        else:
+            # 左转
+            direction = direction[1:] + direction[:1]  # 左转
+
+        # 判断是否到达终点
+        if current == endCell:
+            done = True
+            break
+
+        if saveVideo:
+            directory = f"./video.wallFollowers/{current_date_time}"
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+                pygame.image.save(SCREEN, f"{directory}/{addZeros({k, 8})}.png")
+                k += 1
+            else:
+                pygame.image.save(SCREEN, f"{directory}/{addZeros({k, 8})}.png")
+                k += 1
+
+    # 从终点回溯标记路径
+    traceBackPath(path, cells, show)
 
 
 
+def traceBackPath(path, cells, show):
+    for i in range(len(path) - 1):
+        current = path[i]
+        next_cell = path[i + 1]
+
+        # 根据相对位置标记箭头方向
+        if next_cell.row < current.row:  # Next cell is above
+            cells[current.row][current.col].arrows[0] = True
+        elif next_cell.row > current.row:  # Next cell is below
+            cells[current.row][current.col].arrows[2] = True
+        elif next_cell.col < current.col:  # Next cell is to the left
+            cells[current.row][current.col].arrows[3] = True
+        elif next_cell.col > current.col:  # Next cell is to the right
+            cells[current.row][current.col].arrows[1] = True
+
+        cells[current.row][current.col].inPath = True
+
+    # 标记终点
+    cells[path[-1].row][path[-1].col].inPath = True
 
 
 
