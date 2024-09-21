@@ -214,7 +214,7 @@ def randomWalk(startCell):
                         cell.inMaze=True
                         cell.highlited = False
                         removeWalls(cell, nextCell)
-
+                        updateCanvas()
                 else:
                     walking = True
             else:
