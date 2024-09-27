@@ -16,7 +16,7 @@ CYAN = (0,174,239)
 WHITE = (255, 255, 255)
 outlineThickness = 5
 T = outlineThickness // 2
-WIDTH, HEIGHT = W*COLS, W*ROWS
+WIDTH, HEIGHT = W*COLS+T, W*ROWS+T
 cells = []
 wallList = []
 pygame.init()
