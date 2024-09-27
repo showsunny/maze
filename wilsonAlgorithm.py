@@ -17,7 +17,7 @@ CYAN = (0,174,239)
 RED = (237,27,35)
 outlineThickness = 5
 T = outlineThickness // 2
-WIDTH, HEIGHT = W*COLS, W*ROWS
+WIDTH, HEIGHT = W*COLS + T, W*ROWS + T
 cells = []
 
 pygame.init()
@@ -79,12 +79,16 @@ class Cell:
         if self.inPath:
             pygame.draw.rect(SCREEN, GREEN, pygame.Rect(self.col*W, self.row*W, W, W))
         if self.lines[0]:
+            #top
             pygame.draw.line(SCREEN, GREEN, (self.col*W, self.row*W), (self.col*W+W+T, self.row*W), outlineThickness)
         if self.lines[1]:
+            #right
             pygame.draw.line(SCREEN, GREEN, (self.col*W+W, self.row*W), (self.col*W+W, self.row*W+W+T), outlineThickness)
         if self.lines[2]:
+            #botttom
             pygame.draw.line(SCREEN, GREEN, (self.col*W, self.row*W+W), (self.col*W+W+T, self.row*W+W), outlineThickness)
         if self.lines[3]:
+            #left
             pygame.draw.line(SCREEN, GREEN, (self.col*W, self.row*W), (self.col*W, self.row*W+W+T), outlineThickness)
         
     def checkNearCells(self, lastPosition):
