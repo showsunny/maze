@@ -108,7 +108,7 @@ def main():
     
     setUp()
 
-    firstCell = cells[0][0]
+    firstCell = cells[random.randint(0, ROWS - 1)][random.randint(0, COLS - 1)]
     firstCell.visited = True
 
     wallList.append([firstCell, 0])
@@ -122,6 +122,24 @@ def main():
 
         while len(wallList) > 0:
             randomWall = random.choice(wallList)
+
+            if randomWall[1] == 3 and returnCellIndex(randomWall[0].row,randomWall[0].col-1):
+                # value == => bottom wall 
+                rowIndex = randomWall[0].row
+                colIndex = randomWall[0].col
+                dividingCell = cells[rowIndex][colIndex-1]
+
+                if randomWall[0].visited ^ dividingCell.visited:
+                    removeWalls(randomWall[0], dividingCell)
+
+                    if not(randomWall[0].visited):
+                        randomWall[0].visited = True
+                        print("There's somethings you're missing")
+                    if not(dividingCell.visited):
+                        dividingCell.visited = True
+                        wallList.append([dividingCell, 2])
+                        wallList.append([dividingCell, 3])
+                        wallList.append([dividingCell, 0])
 
             if randomWall[1] == 2 and returnCellIndex(randomWall[0].row+1,randomWall[0].col):
                 # value == => bottom wall 
@@ -180,6 +198,12 @@ def main():
             wallList.remove(randomWall)
             
             updateCanvas()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            else:
+                pygame.display.flip()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
