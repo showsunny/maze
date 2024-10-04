@@ -103,11 +103,11 @@ class Cell:
             if topCell!=False:
                 nearCells.append(topCell)
 
-        if self.col < ROWS-1:  # 右侧单元格
+        if self.col < COLS-1:  # 右侧单元格
             if rightCell !=False:
                 nearCells.append(rightCell)
 
-        if self.row < COLS-1:  # 底部单元格
+        if self.row < ROWS-1:  # 底部单元格
             if bottomCell !=False:
                 nearCells.append(bottomCell)
     
